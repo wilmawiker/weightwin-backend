@@ -1,35 +1,14 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const exerciseRoutes = require("./src/routes/exerciseRoutes");
-
 const app = express();
+const PORT = 4000;
 
-app.use(express.json());
-
-app.use((req, res, next) => {
-  console.log(`Processing ${req.method} request to ${req.path}`);
-  next();
+app.get("/home", (req, res) => {
+  res.status(200).json("Welcome, your app is working well");
 });
 
-app.use("/api/v1/exercises", exerciseRoutes);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
 
-const port = 4000;
-async function run() {
-  try {
-    // Connect to MongoDB database (via Mongoose)
-    mongoose.set("strictQuery", false);
-    const conn = await mongoose.connect(
-      "mongodb+srv://test_user:test123@cluster0.ogxglsl.mongodb.net/weightwin"
-    );
-    console.log(`MongoDB connected: ${conn.connection.host}`);
-
-    // Start server; listen to requests on port
-    app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
-    });
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-run();
+// Export the Express API
+module.exports = app;
