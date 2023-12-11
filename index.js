@@ -9,7 +9,7 @@ app.get("/home", (req, res) => {
   res.status(200).json("Welcome, your app is working well");
 });
 
-app.get("/api/v1/exercises", exerciseRoutes);
+app.use("/api/v1/exercises", exerciseRoutes);
 
 async function run() {
   try {
