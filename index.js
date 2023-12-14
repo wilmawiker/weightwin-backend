@@ -11,21 +11,14 @@ app.get("/home", (req, res) => {
 console.log("test");
 app.use("/api/v1/exercises", exerciseRoutes);
 
-async function run() {
-  try {
-    // Connect to MongoDB database (via Mongoose)
-    mongoose.set("strictQuery", false);
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
-    console.log(`MongoDB connected: ${conn.connection.host}`);
+// Connect to MongoDB database (via Mongoose)
+mongoose.set("strictQuery", false);
+const conn = mongoose.connect(process.env.MONGODB_URI);
 
-    // Start server; listen to requests on port
-    app.listen(port, () => {});
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-run();
+// Start server; listen to requests on port
+app.listen(port, () => {
+  console.log(`Server running on ${port}, http://localhost:${port}`);
+});
 
 // Export the Express API
 module.exports = app;
