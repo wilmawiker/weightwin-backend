@@ -8,7 +8,7 @@ const exerciseRoutes = require("./routes/exerciseRoutes");
 app.get("/home", (req, res) => {
   res.status(200).json("Welcome, your app is working well");
 });
-
+console.log("test");
 app.use("/api/v1/exercises", exerciseRoutes);
 
 async function run() {
