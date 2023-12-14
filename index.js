@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const app = express();
-const PORT = 4000;
+const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const exerciseRoutes = require("./routes/exerciseRoutes");
 
@@ -19,9 +19,7 @@ async function run() {
     console.log(`MongoDB connected: ${conn.connection.host}`);
 
     // Start server; listen to requests on port
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
-    });
+    app.listen(port, () => {});
   } catch (error) {
     console.error(error);
   }
