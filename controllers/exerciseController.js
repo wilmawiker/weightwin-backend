@@ -13,3 +13,23 @@ exports.getAllExercises = async (req, res) => {
     });
   }
 };
+
+exports.addExercise = async (req, res, next) => {
+  const { name, primary, secondary, videoUrl, description, instructions } =
+    req.body;
+  try {
+    const exercise = new Exercise({
+      name,
+      primary,
+      secondary,
+      videoUrl,
+      description,
+      instructions,
+    });
+
+    await exercise.save();
+    res.json({ message: "Exercise added" });
+  } catch (error) {
+    next(error);
+  }
+};

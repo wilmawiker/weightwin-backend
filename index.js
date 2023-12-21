@@ -4,12 +4,18 @@ const app = express();
 const port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const exerciseRoutes = require("./routes/exerciseRoutes");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+
+app.use(express.json());
 
 app.get("/home", (req, res) => {
   res.status(200).json("Welcome, your app is working well");
 });
 console.log("test");
-app.use("/api/v1/exercises", exerciseRoutes);
+app.use("/exercises", exerciseRoutes);
+app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 async function run() {
   try {
