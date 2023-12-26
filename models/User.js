@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  age: {
+  dateOfBirth: {
     type: String,
     required: true,
   },
@@ -38,7 +38,6 @@ const UserSchema = new mongoose.Schema({
 // Hash the password before saving it to the database
 UserSchema.pre("save", async function (next) {
   const user = this;
-  console.log(user);
   if (!user.isModified("password")) return next();
 
   try {

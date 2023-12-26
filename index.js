@@ -6,8 +6,11 @@ const mongoose = require("mongoose");
 const exerciseRoutes = require("./routes/exerciseRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const cors = require("cors");
 
 app.use(express.json());
+
+app.use(cors());
 
 app.get("/home", (req, res) => {
   res.status(200).json("Welcome, your app is working well");

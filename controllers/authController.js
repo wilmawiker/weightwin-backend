@@ -4,16 +4,24 @@ const User = require("../models/User");
 
 // Register a new user
 exports.register = async (req, res, next) => {
-  const { email, password, username, gender, age, workouts, history, records } =
-    req.body;
+  const {
+    email,
+    username,
+    gender,
+    dateOfBirth,
+    password,
+    workouts,
+    history,
+    records,
+  } = req.body;
 
   try {
     const user = new User({
       email,
-      password,
       username,
       gender,
-      age,
+      dateOfBirth,
+      password,
       workouts,
       history,
       records,
@@ -46,7 +54,7 @@ exports.login = async (req, res, next) => {
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1 hour",
     });
-    res.json({ token });
+    res.json(user);
   } catch (error) {
     next(error);
   }
