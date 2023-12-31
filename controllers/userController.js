@@ -3,6 +3,7 @@ const app = require("..");
 const Set = require("../models/Set");
 const User = require("../models/User");
 const Workout = require("../models/Workout");
+const bcrypt = require("bcrypt");
 
 exports.addWorkout = async (req, res, next) => {
   const {
@@ -53,5 +54,37 @@ exports.addWorkout = async (req, res, next) => {
     res.json({ message: "Workout added" });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { email, username, gender, dateOfBirth, password } = req.body;
+    const userId = req.params.id;
+
+    if (!email && !username && !gender && !dateOfBirth && !password) {
+      return res.status(400).json({
+        message: "Must provide something to update!",
+      });
+    }
+
+    const userToUpdate = await User.findById(userId);
+
+    if (!userToUpdate) {
+      return res.sendStatus(404);
+    }
+
+    if (email) userToUpdate.email = email;
+    if (username) userToUpdate.username = username;
+    if (gender) userToUpdate.gender = gender;
+    if (dateOfBirth) userToUpdate.dateOfBirth = dateOfBirth;
+    if (password) userToUpdate.password = password;
+
+    await userToUpdate.save();
+    return res.json(userToUpdate);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
   }
 };

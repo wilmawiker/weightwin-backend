@@ -26,7 +26,6 @@ exports.register = async (req, res, next) => {
       history,
       records,
     });
-    console.log(user);
     await user.save();
     res.json({ message: "Registration successful" });
   } catch (error) {
@@ -45,8 +44,6 @@ exports.login = async (req, res, next) => {
     }
 
     const passwordMatch = await user.comparePassword(password);
-    console.log(passwordMatch);
-    console.log(password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "Incorrect password" });
     }
@@ -54,7 +51,7 @@ exports.login = async (req, res, next) => {
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: "1 hour",
     });
-    res.json(user);
+    res.json({ token: token, data: user });
   } catch (error) {
     next(error);
   }

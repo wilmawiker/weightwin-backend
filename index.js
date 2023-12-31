@@ -15,7 +15,6 @@ app.use(cors());
 app.get("/home", (req, res) => {
   res.status(200).json("Welcome, your app is working well");
 });
-console.log("test");
 app.use("/exercises", exerciseRoutes);
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
