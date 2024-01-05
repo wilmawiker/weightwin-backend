@@ -10,11 +10,16 @@ const WorkoutSchema = new mongoose.Schema({
       {
         exerciseId: {
           type: String,
-          required: true,
         },
-        sets: {
+        name: {
+          type: String,
+        },
+        set: {
           type: [
             {
+              id: {
+                type: Number,
+              },
               reps: {
                 type: Number,
                 required: true,
@@ -33,8 +38,8 @@ const WorkoutSchema = new mongoose.Schema({
     ],
     required: true,
   },
-  date: {
-    type: Date,
+  planned: {
+    type: Boolean,
     required: true,
   },
 });

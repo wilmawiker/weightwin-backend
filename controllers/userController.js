@@ -6,51 +6,43 @@ const Workout = require("../models/Workout");
 const bcrypt = require("bcrypt");
 
 exports.addWorkout = async (req, res, next) => {
-  const {
-    date,
-    exercises: [
-      {
-        exerciseId,
-        sets: [{ reps, weight }],
-      },
-    ],
-  } = req.body;
+  const { exercises, planned } = req.body;
   try {
     const workout = new Workout({
       userId: req.user.id,
-      exercises: [
-        {
-          exerciseId,
-          sets: [{ reps, weight }],
-        },
-      ],
-      date,
+      exercises,
+      planned,
+    });
+
+    exercises.forEach((exercise) => {
+      exercise.set.forEach(async (set) => {
+        const history = new Set.History({
+          userId: req.user.id,
+          exerciseId: exercise.exerciseId,
+          reps: set.reps,
+          weight: set.weight,
+        });
+
+        if (set.reps <= 10) {
+          let cursor = mongoose.connection.db
+            .collection("records")
+            .find({ reps: set.reps });
+          console.log(cursor);
+          const record = new Set.Record({
+            userId: req.user.id,
+            exerciseId: exercise.exerciseId,
+            reps: set.reps,
+            weight: set.weight,
+          });
+          await record.save();
+        }
+
+        await history.save();
+      });
     });
 
     await workout.save();
 
-    const history = new Set.History({
-      userId: req.user.id,
-      exerciseId,
-      reps,
-      weight,
-    });
-
-    await history.save();
-
-    if (reps <= 10) {
-      let cursor = mongoose.connection.db
-        .collection("records")
-        .find({ reps: reps });
-      console.log(cursor);
-      const record = new Set.Record({
-        userId: req.user.id,
-        exerciseId,
-        reps,
-        weight,
-      });
-      await record.save();
-    }
     res.json({ message: "Workout added" });
   } catch (error) {
     next(error);

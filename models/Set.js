@@ -10,7 +10,7 @@ const SetSchema = new mongoose.Schema({
     required: true,
   },
   reps: {
-    type: String,
+    type: Number,
     required: true,
   },
   weight: {
