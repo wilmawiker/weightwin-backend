@@ -106,3 +106,37 @@ exports.updateUser = async (req, res) => {
     });
   }
 };
+
+exports.getUserHistory = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  let cursor = mongoose.connection.db
+    .collection("histories")
+    .find({ userId: userId })
+    .limit(20)
+    .sort({ _id: -1 });
+
+  console.log(cursor);
+
+  const history = await cursor.toArray();
+
+  return res.json(history);
+};
+
+exports.getUserRecords = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  let cursor = mongoose.connection.db
+    .collection("records")
+    .find({ userId: userId })
+    .limit(10)
+    .sort({ reps: 1 });
+
+  console.log(cursor);
+
+  const records = await cursor.toArray();
+
+  return res.json(records);
+};
