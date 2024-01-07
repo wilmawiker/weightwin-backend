@@ -23,18 +23,44 @@ exports.addWorkout = async (req, res, next) => {
           weight: set.weight,
         });
 
-        if (set.reps <= 10) {
+        if (set.reps <= 10 && set.reps > 0) {
+          console.log(set.reps);
+          let document = {};
+          let foundDoc = false;
           let cursor = mongoose.connection.db
             .collection("records")
             .find({ reps: set.reps });
-          console.log(cursor);
-          const record = new Set.Record({
-            userId: req.user.id,
-            exerciseId: exercise.exerciseId,
-            reps: set.reps,
-            weight: set.weight,
-          });
-          await record.save();
+          for await (const doc of cursor) {
+            console.log(doc);
+            document = doc;
+            foundDoc = true;
+          }
+
+          console.log(document);
+
+          if (foundDoc === false) {
+            const record = new Set.Record({
+              userId: req.user.id,
+              exerciseId: exercise.exerciseId,
+              reps: set.reps,
+              weight: set.weight,
+            });
+            await record.save();
+          }
+
+          if (document.weight < set.weight) {
+            mongoose.connection.db
+              .collection("records")
+              .findOneAndDelete({ reps: set.reps });
+
+            const record = new Set.Record({
+              userId: req.user.id,
+              exerciseId: exercise.exerciseId,
+              reps: set.reps,
+              weight: set.weight,
+            });
+            await record.save();
+          }
         }
 
         await history.save();
