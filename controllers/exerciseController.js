@@ -1,8 +1,24 @@
+const { param } = require("..");
 const Exercise = require("../models/Exercise");
 
 exports.getAllExercises = async (req, res) => {
   try {
     let exercises = await Exercise.find();
+    return res.json({
+      data: exercises,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+exports.getExerciseById = async (req, res) => {
+  const exerciseId = req.params.id;
+  try {
+    let exercises = await Exercise.findById(exerciseId);
     return res.json({
       data: exercises,
     });
