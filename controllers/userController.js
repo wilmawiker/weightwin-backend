@@ -140,3 +140,18 @@ exports.getUserRecords = async (req, res) => {
 
   return res.json(records);
 };
+
+exports.getPlannedWorkouts = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+
+  let cursor = mongoose.connection.db
+    .collection("workouts")
+    .find({ userId: userId, planned: true });
+
+  console.log(cursor);
+
+  const plannedWorkouts = await cursor.toArray();
+
+  return res.json(plannedWorkouts);
+};

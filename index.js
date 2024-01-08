@@ -11,12 +11,7 @@ require("express-async-errors");
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173", "https://weightwin-backend.vercel.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+app.use(cors());
 
 app.use((req, res, next) => {
   console.log(`Processing ${req.method} request to ${req.path}`);
