@@ -10,7 +10,17 @@ const cors = require("cors");
 
 app.use(express.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://weightwin-backend.vercel.app/"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
+  })
+);
+
+app.use((req, res, next) => {
+  console.log(`Processing ${req.method} request to ${req.path}`);
+  next();
+});
 
 app.get("/home", (req, res) => {
   res.status(200).json("Welcome, your app is working well");
