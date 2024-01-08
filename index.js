@@ -40,5 +40,4 @@ async function run() {
 
 run();
 
-// Export the Express API
 module.exports = app;
