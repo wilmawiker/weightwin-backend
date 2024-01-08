@@ -2,7 +2,7 @@ const Exercise = require("../models/Exercise");
 
 exports.getAllExercises = async (req, res) => {
   console.log("hej");
-  let exercises = await Exercise.find();
+  const exercises = await Exercise.find();
   console.log(exercises);
   return res.json({
     data: exercises,
