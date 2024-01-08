@@ -1,19 +1,12 @@
 const Exercise = require("../models/Exercise");
 
 exports.getAllExercises = async (req, res) => {
-  try {
-    console.log("hej");
-    let exercises = await Exercise.find();
-    console.log(exercises);
-    return res.json({
-      data: exercises,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: error.message,
-    });
-  }
+  console.log("hej");
+  let exercises = await Exercise.find();
+  console.log(exercises);
+  return res.json({
+    data: exercises,
+  });
 };
 
 exports.getExerciseById = async (req, res) => {
