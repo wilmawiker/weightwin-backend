@@ -13,8 +13,8 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://weightwin-backend.vercel.app/"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
+    origin: ["http://localhost:5173", "https://weightwin-backend.vercel.app/"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
@@ -32,17 +32,14 @@ app.use("/user", userRoutes);
 
 async function run() {
   try {
-    // Connect to MongoDB database (via Mongoose)
     mongoose.set("strictQuery", false);
     const conn = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB connected: ${conn.connection.host}`);
-
-    // Start server; listen to requests on port
     app.listen(port, () => {
-      console.log(`Server running on ${port}, http://localhost:${port}`);
+      console.log(`Server running on http://localhost:${port}`);
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }
 
