@@ -3,6 +3,7 @@ const Exercise = require("../models/Exercise");
 exports.getAllExercises = async (req, res) => {
   try {
     let exercises = await Exercise.find();
+    console.log(exercises);
     return res.json({
       data: exercises,
     });
