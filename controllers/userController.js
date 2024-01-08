@@ -24,7 +24,6 @@ exports.addWorkout = async (req, res, next) => {
         });
 
         if (set.reps <= 10 && set.reps > 0) {
-          console.log(set.reps);
           let document = {};
           let foundDoc = false;
           let cursor = mongoose.connection.db
@@ -35,8 +34,6 @@ exports.addWorkout = async (req, res, next) => {
             document = doc;
             foundDoc = true;
           }
-
-          console.log(document);
 
           if (foundDoc === false) {
             const record = new Set.Record({
@@ -109,15 +106,12 @@ exports.updateUser = async (req, res) => {
 
 exports.getUserHistory = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
 
   let cursor = mongoose.connection.db
     .collection("histories")
     .find({ userId: userId })
     .limit(20)
     .sort({ _id: -1 });
-
-  console.log(cursor);
 
   const history = await cursor.toArray();
 
@@ -134,8 +128,6 @@ exports.getUserRecords = async (req, res) => {
     .limit(10)
     .sort({ reps: 1 });
 
-  console.log(cursor);
-
   const records = await cursor.toArray();
 
   return res.json(records);
@@ -143,13 +135,10 @@ exports.getUserRecords = async (req, res) => {
 
 exports.getPlannedWorkouts = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
 
   let cursor = mongoose.connection.db
     .collection("workouts")
     .find({ userId: userId, planned: true });
-
-  console.log(cursor);
 
   const plannedWorkouts = await cursor.toArray();
 
