@@ -1,4 +1,3 @@
-const { param } = require("..");
 const Exercise = require("../models/Exercise");
 
 exports.getAllExercises = async (req, res) => {

@@ -7,6 +7,7 @@ const exerciseRoutes = require("./routes/exerciseRoutes");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const cors = require("cors");
+require("express-async-errors");
 
 app.use(express.json());
 
