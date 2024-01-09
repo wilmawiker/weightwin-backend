@@ -113,7 +113,7 @@ exports.getUserHistory = async (req, res) => {
     .collection("histories")
     .find({ userId: userId })
     .limit(20)
-    .sort({ _id: -1 });
+    .sort({ exerciseName, _id: -1 });
 
   const history = await cursor.toArray();
 
@@ -127,8 +127,8 @@ exports.getUserRecords = async (req, res) => {
   let cursor = mongoose.connection.db
     .collection("records")
     .find({ userId: userId })
-    .limit(10)
-    .sort({ reps: 1 });
+    .limit(30)
+    .sort({ exerciseName, reps: 1 });
 
   const records = await cursor.toArray();
 
