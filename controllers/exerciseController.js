@@ -1,6 +1,7 @@
 const Exercise = require("../models/Exercise");
 
 exports.getAllExercises = async (req, res) => {
+  console.log("hej");
   const exercises = await Exercise.find();
   return res.json({
     data: exercises,
