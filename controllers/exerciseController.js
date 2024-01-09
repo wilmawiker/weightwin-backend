@@ -36,7 +36,7 @@ exports.addExercise = async (req, res, next) => {
     });
 
     await exercise.save();
-    res.json({ message: "Exercise added" });
+    return res.json({ message: "Exercise added" });
   } catch (error) {
     next(error);
   }
