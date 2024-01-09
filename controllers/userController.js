@@ -19,6 +19,7 @@ exports.addWorkout = async (req, res, next) => {
         const history = new Set.History({
           userId: req.user.id,
           exerciseId: exercise.exerciseId,
+          exerciseName: exercise.name,
           reps: set.reps,
           weight: set.weight,
         });
@@ -53,6 +54,7 @@ exports.addWorkout = async (req, res, next) => {
             const record = new Set.Record({
               userId: req.user.id,
               exerciseId: exercise.exerciseId,
+              exerciseName: exercise.name,
               reps: set.reps,
               weight: set.weight,
             });
