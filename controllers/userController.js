@@ -113,9 +113,11 @@ exports.getUserHistory = async (req, res) => {
     .collection("histories")
     .find({ userId: userId })
     .limit(20)
-    .sort({ exerciseName, _id: -1 });
+    .sort({ _id: -1 });
 
   const history = await cursor.toArray();
+
+  console.log(history);
 
   return res.json(history);
 };
@@ -128,7 +130,7 @@ exports.getUserRecords = async (req, res) => {
     .collection("records")
     .find({ userId: userId })
     .limit(30)
-    .sort({ exerciseName, reps: 1 });
+    .sort({ reps: 1 });
 
   const records = await cursor.toArray();
 
